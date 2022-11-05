@@ -28,5 +28,6 @@ After I gain some ground in Spring Boot, I wish to explore and implement this ap
     - Sping Dev tools
     - Thymeleaf
     - Spring Actuator
-
-
+* Added a folder named qfiles for chunks of a sample page under the /templates/static/ folder 
+* Created PlayController.java the controller that will handle user interactions
+* Created play.html which will hold page chunks for user interaction
