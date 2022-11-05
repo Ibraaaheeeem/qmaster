@@ -20,3 +20,13 @@ I'm using Spring Boot to build the app. I'm doing this while learning Spring Boo
 
 After I gain some ground in Spring Boot, I wish to explore and implement this app in React.
 
+#### 05/11/2022
+* Started the project
+* Created Starter project from [spring initializr](http://start.spring.io)
+* Added the following dependencies:
+    - Spring web
+    - Sping Dev tools
+    - Thymeleaf
+    - Spring Actuator
+
+
