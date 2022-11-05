@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <title>
+        Play QMaster
+    </title>
+</head>
+<body>
+    <div id = "row" th:each="i:  ${rows}">
+        <img th:each="j : ${columns}" th:src="@{${'/qfiles/row-'+i+'-column-'+j+'.png'}}">
+    </div>
+    
+</body>
+</html>
