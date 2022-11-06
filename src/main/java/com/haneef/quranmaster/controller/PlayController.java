@@ -9,8 +9,10 @@ public class PlayController {
 
     @GetMapping("/")
     public String play(Model model){
-        model.addAttribute("rows", new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"});
-        model.addAttribute("columns", new String[]{"1", "2", "3", "4", "5"});
+
+        model.addAttribute("rows", new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14});
+        model.addAttribute("columns", new int[]{4, 3, 2, 1, 0});
+        model.addAttribute("difficulty", 5);
         return "play";
     }
     

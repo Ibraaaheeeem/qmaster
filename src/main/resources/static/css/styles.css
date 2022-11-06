@@ -1,0 +1,14 @@
+section {
+    padding: 5px;
+    direction: rtl;
+    display: grid;
+    grid-template-columns: repeat(5,  auto);
+    grid-template-rows: repeat(15,  auto);
+    justify-content: center;
+}
+  
+.item {
+    padding: 1px;
+    cursor: move; 
+    background-color: red; 
+}

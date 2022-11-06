@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th = "http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="/css/styles.css">
+    
     <title>
         Play QMaster
     </title>
 </head>
 <body>
-    <div id = "row" th:each="i:  ${rows}">
-        <img th:each="j : ${columns}" th:src="@{${'/qfiles/row-'+i+'-column-'+j+'.png'}}">
-    </div>
-    
+    <section class = "box grabbable-parent">
+        <th:block th:each="i : ${rows}">
+        <div th:each="j : ${columns}">
+            <img class = "item" draggable = true  th:src="@{${'/qfiles/row-'+(i+1)+'-column-'+(j+1)+'.png'}}" data-grabbable-index="${i * difficulty + (j+1)}">
+        </div>
+        </th:block>
+    </section>
+    <button type="submit" value="Check" onsubmit="onSubmit()"> Check Order </button>
+    <script th:src="@{/js/grabbable.js}"></script>
+    <script >
+        
+        document.querySelector(".grabbable-parent").grabbable({
+        callback: function(el, newIndex, oldIndex) {
+        //alert("Grabbed!\n" + oldIndex + " -> " + newIndex);
+        }
+        });
+        document.querySelector(".grabbable-parent").grabbable({
+            rememberId: "grabbable-sample"
+        });
+
+        document.querySelector(".grabbable-parent").grabbable({
+        style: {
+        border: "2px solid #ff0000",
+        background: "#ffddcc",
+        transform: "scale(0.5, 0.5)",
+        }
+        
+});
+    </script>
 </body>
 </html>
