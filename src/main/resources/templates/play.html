@@ -9,11 +9,10 @@
 </head>
 <body>
     <section class = "box grabbable-parent">
-        <th:block th:each="i : ${rows}">
-        <div th:each="j : ${columns}">
-            <img class = "item" draggable = true  th:src="@{${'/qfiles/row-'+(i+1)+'-column-'+(j+1)+'.png'}}" data-grabbable-index="${i * difficulty + (j+1)}">
+        <div th:each="r : ${indices}"> -->
+            <img class = "item" draggable = true  th:src="@{${'/qfiles/row-'+(r/5+1)+'-column-'+(r%5+1)+'.png'}}" data-grabbable-index="${r}">
         </div>
-        </th:block>
+        <!-- </th:block> -->
     </section>
     <button type="submit" value="Check" onsubmit="onSubmit()"> Check Order </button>
     <script th:src="@{/js/grabbable.js}"></script>
