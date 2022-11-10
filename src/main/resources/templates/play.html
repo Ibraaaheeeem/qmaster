@@ -10,7 +10,7 @@
 <body>
     <section class = "box grabbable-parent">
         <div th:each="r : ${indices}"> -->
-            <img class = "item" draggable = true  th:src="@{${'/qfiles/row-'+(r/5+1)+'-column-'+(r%5+1)+'.png'}}" data-grabbable-index="${r}">
+            <img class = "item" draggable = true  th:src="@{${'/qfiles/row-'+(r/5+1)+'-column-'+(5-(r%5))+'.png'}}" data-grabbable-index="${r}">
         </div>
         <!-- </th:block> -->
     </section>
