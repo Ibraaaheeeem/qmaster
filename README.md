@@ -31,3 +31,7 @@ After I gain some ground in Spring Boot, I wish to explore and implement this ap
 * Added a folder named qfiles for chunks of a sample page under the /templates/static/ folder 
 * Created PlayController.java the controller that will handle user interactions
 * Created play.html which will hold page chunks for user interaction
+
+#### 10/11/2022
+* Added javascript grid grab and move functionality
+* Implemented randomisation of page chunks
