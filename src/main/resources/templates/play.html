@@ -8,9 +8,10 @@
     </title>
 </head>
 <body>
+    <input type="hidden" id="indices" th:value="${working_indices}"/>
     <section class = "box grabbable-parent">
-        <div th:each="r : ${indices}"> -->
-            <img class = "item" draggable = true  th:src="@{${'/qfiles/row-'+(r/5+1)+'-column-'+(5-(r%5))+'.png'}}" data-grabbable-index="${r}">
+        <div th:each="r : ${indices}">
+            <img class = "item" draggable = true  th:src="@{${'/qfiles/row-'+(r/5+1)+'-column-'+(5-(r%5))+'.png'}}" data-grabbable-index="${r}" th:id="${r}" th:ondragend="updateWorkingIndices()">
         </div>
         <!-- </th:block> -->
     </section>
@@ -20,21 +21,26 @@
         
         document.querySelector(".grabbable-parent").grabbable({
         callback: function(el, newIndex, oldIndex) {
-        //alert("Grabbed!\n" + oldIndex + " -> " + newIndex);
-        }
-        });
-        document.querySelector(".grabbable-parent").grabbable({
             rememberId: "grabbable-sample"
-        });
-
-        document.querySelector(".grabbable-parent").grabbable({
-        style: {
-        border: "2px solid #ff0000",
-        background: "#ffddcc",
-        transform: "scale(0.5, 0.5)",
+            let indicesString = document.getElementById("indices").value;
+            var indices = indicesString.trim().split(" ");
+            console.log(indices + "-" + newIndex + "-" + oldIndex);
+            let toSwap = indices[oldIndex];
+            indices.splice(newIndex, 0, toSwap);
+            indices.splice(oldIndex+1, 1);
+            document.getElementById("indices").value = indices.join(" ");
+            
+            //alert("Grabbed!\n"+ indices[newIndex] + " -> " + indices[oldIndex]);
+            console.log(indices);
+            //alert("Grabbed!\n"+  + newIndex + " -> " + oldIndex);
+            //updateWorkingIndices(newIndex, oldIndex);
         }
+        });
         
-});
+        function updateWorkingIndices(){
+            //var val = document.getElementById("#yourId").val();
+            //alert(" - " + " - " );
+        }
     </script>
 </body>
 </html>
