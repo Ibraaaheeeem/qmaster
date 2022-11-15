@@ -1,18 +1,94 @@
-section {
-    padding: 1px;
+.opening {
+  direction: rtl;
+  text-align: right;
+}
+
+
+p {
+  margin: 0;
+}
+
+ul { list-style-type: ""; }
+.nav-list {
+    padding: 5px;
+    border-bottom: #444;
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+    
+}
+#main {
+  border-radius: 10px;
+    display: inline;
+    z-index: 1;
+}
+.nav_pane {
+display: block;
+margin-top: 50px;
+}
+.box {
+    padding: 0;
     direction: rtl;
     display: grid;
-    grid-template-columns: repeat(5,  auto);
+    
+    /* grid-template-columns: repeat(2,  auto); */
     grid-template-rows: repeat(15,  auto);
     justify-content: center;
 }
-  
+
+.holder {
+    background-color: #ccc;
+    padding-bottom: -4px;
+}
 .item {
-    padding: 0;
+    padding: 1px 0.5px 1px 0.5px;
     cursor: move; 
-    background-color: red; 
+    background-color: #f22; 
+
 }
 
-img {
-    
-}
+.sidebar {
+    margin-left: 0;
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 50px;
+    left: 0;
+    background-color: #fff; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+  }
+  sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #181919;
+    display: block;
+    transition: 0.3s;
+  }
+  .sidebar a:hover {
+    color: blueviolet;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #aaa;
+    color: #333;
+    padding: 7px 12px;
+    border-radius: 10px;
+    align-content: center;
+  }
+  
+  .openbtn:hover {
+    background-color: #444;
+    color: #fff;
+  }
+  
+  .juz-level {
+    width: 100%;
+    padding-top: 5px;
+    margin-top: 5px;
+    background-color: #aaa;
+    text-align: center;
+  }

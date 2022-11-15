@@ -7,18 +7,56 @@
         Play QMaster
     </title>
 </head>
-<body>
+<body onload="arrange()" >
     <input type="hidden" id="indices" th:value="${working_indices}"/>
-    <section class = "box grabbable-parent">
-        <div th:each="r : ${indices}">
-            <img class = "item" draggable = true  th:src="@{${'/qfiles/row-'+(r/5+1)+'-column-'+(5-(r%5))+'.png'}}" data-grabbable-index="${r}" th:id="${r}" th:ondragend="updateWorkingIndices()">
+    <input type="hidden" id="difficulty" th:value="${difficulty}"/>
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">&#9776;</button>
+    </div>
+    <section class="nav_pane">
+        <div id="mySidebar" class="sidebar">
+            <ul>
+            <p class = "juz-level">Juz 1</p>
+            <li class="nav-list" th:each="i : ${#numbers.sequence( 1, 604)}" th:value="${i}"><span th:text="${'📄 PAGE ' + i}"></span><span class="fill-up"></span><p class = "opening" th:text="${page_openings[i - 1]}"></p>
+                <th:block th:if="${(i - 2) % 20 == 0 && i != 2 && i < 602}" ><br><p class = "juz-level" th:text="${'Juz '+ (( i - 2 ) /20 + 1 )}"></p></th:block>
+            </li>
+            </ul>
+          </div>
+    </section>
+        
+    
+    <section class = "box grabbable-parent" id="grids">
+          
+          
+        <div th:each="r : ${indices}" class="holder">
+            <img class = "item" draggable = true  th:src="@{${'/qfiles/'+ difficulty +'_15/page'+#numbers.formatInteger(page_number,3) + '_' + #numbers.formatInteger(r+1,3) +'.png'}}" data-grabbable-index="${r}" th:id="${r}" th:ondragend="updateWorkingIndices()"  width="${1100/difficulty}+'px" onload="setBg(this)">
         </div>
         <!-- </th:block> -->
     </section>
     <button type="submit" value="Check" onsubmit="onSubmit()"> Check Order </button>
     <script th:src="@{/js/grabbable.js}"></script>
     <script >
-        
+        function generateRandomColor(){
+            let maxVal = 0xFFFFFF; // 16777215.
+            let randomNumber = Math.random() * maxVal;
+            randomNumber = Math.floor(randomNumber);
+            randomNumber = randomNumber.toString(16);
+            let randColor = randomNumber.padStart(6, 0);
+            return `#${randColor.toUpperCase()}`
+        }
+
+        function setBg(el) {
+            el.style.backgroundColor= generateRandomColor();
+        }
+        function arrange(){
+            let difficultyIndex = document.getElementById("difficulty").value;
+            //alert("here");
+            //document.getElementsByClassName(".box .grabbable-parent").style.gridTemplateColumns = "50px 50px 50px";
+            document.getElementById("grids").style.gridTemplateColumns = "repeat("+difficultyIndex+",  auto)";
+            //document.getElementsByClassName(".item").style.backgrounndColor= generateRandomColor();
+            //document.getElementsByClassName(".item").style.backgrounndColor= generateRandomColor();
+            
+        }
         document.querySelector(".grabbable-parent").grabbable({
         callback: function(el, newIndex, oldIndex) {
             rememberId: "grabbable-sample"
@@ -41,6 +79,23 @@
             //var val = document.getElementById("#yourId").val();
             //alert(" - " + " - " );
         }
+        /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+        function openNav() {
+        if (document.getElementById("mySidebar").style.width == "250px") {
+            
+            this.closeNav();
+        }
+        else {
+            document.getElementById("mySidebar").style.width = "250px";
+        }
+        //document.getElementById("main").style.marginLeft = "10px";
+        }
+
+        /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+        function closeNav() {
+        document.getElementById("mySidebar").style.width = "0px";
+        //document.getElementById("main").style.marginLeft = "50px";
+        } 
     </script>
 </body>
 </html>

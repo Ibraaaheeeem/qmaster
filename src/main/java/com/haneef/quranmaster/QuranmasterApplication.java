@@ -9,5 +9,4 @@ public class QuranmasterApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(QuranmasterApplication.class, args);
 	}
-
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.haneef.quranmaster.FirstVerses;
+
 @Controller
 public class PlayController {
 
@@ -18,8 +20,11 @@ public class PlayController {
     @GetMapping("/")
     public String play(Model model){
         List<Integer> randomIndices = new ArrayList<Integer>();
+        int difficulty = 2;
+        int pageNumber = 4;
         String randomString = "";
-        int limit = 5 * 15;
+        int limit = difficulty * 15;
+       
         Random r = new Random();
         while (randomIndices.size() < limit){
             int randomIndex = r.nextInt(limit);
@@ -28,14 +33,13 @@ public class PlayController {
                 randomString += randomIndex+" ";
             }
         }
-        for(int i = 0; i < randomIndices.size(); i++){
-            //System.out.print(randomIndices.get(i)+" - ");
-        }
-        //model.addAttribute("rows", new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14});
-        //model.addAttribute("columns", new int[]{4, 3, 2, 1, 0});
+        
+        String[] pageOpenings = new FirstVerses().pageOpenings;
         model.addAttribute("indices", randomIndices);
         model.addAttribute("working_indices", randomString);
-        model.addAttribute("difficulty", 5);
+        model.addAttribute("page_openings", pageOpenings);
+        model.addAttribute("difficulty", difficulty);
+        model.addAttribute("page_number", pageNumber);
         return "play";
     }
     
