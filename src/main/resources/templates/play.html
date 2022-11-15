@@ -1,6 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th = "http://www.thymeleaf.org">
 <head>
+    <script>
+        function generateRandomColor(){
+            let maxVal = 0xFFFFFF; // 16777215.
+            let randomNumber = Math.random() * maxVal;
+            randomNumber = Math.floor(randomNumber);
+            randomNumber = randomNumber.toString(16);
+            let randColor = randomNumber.padStart(6, 0);
+            return `#${randColor.toUpperCase()}`
+        }
+
+        function setBg(el) {
+            
+            let indicesString = document.getElementById("indices").value;
+            var indices = indicesString.trim().split(" ");
+            //alert(indices[document.getElementById("last_updated").value] +" - " +document.getElementById("last_updated").value);
+            if (indices[document.getElementById("last_updated").value] == document.getElementById("last_updated").value){
+                //alert("Yes");
+                el.style.backgroundColor= "#fff";
+            }
+            else{
+                el.style.backgroundColor= generateRandomColor();
+            }
+        }
+        function arrange(){
+            let difficultyIndex = document.getElementById("difficulty").value;
+            //alert("here");
+            //document.getElementsByClassName(".box .grabbable-parent").style.gridTemplateColumns = "50px 50px 50px";
+            document.getElementById("grids").style.gridTemplateColumns = "repeat("+difficultyIndex+",  auto)";
+            //document.getElementsByClassName(".item").style.backgrounndColor= generateRandomColor();
+            //document.getElementsByClassName(".item").style.backgrounndColor= generateRandomColor();
+            
+        }
+    </script>
     <link rel="stylesheet" href="/css/styles.css">
     
     <title>
@@ -10,6 +43,7 @@
 <body onload="arrange()" >
     <input type="hidden" id="indices" th:value="${working_indices}"/>
     <input type="hidden" id="difficulty" th:value="${difficulty}"/>
+    <input type="hidden" id="last_updated" th:value="${last_updated}"/>
     <div id="main">
         <button class="openbtn" onclick="openNav()">&#9776;</button>
     </div>
@@ -26,48 +60,44 @@
         
     
     <section class = "box grabbable-parent" id="grids">
-          
-          
         <div th:each="r : ${indices}" class="holder">
-            <img class = "item" draggable = true  th:src="@{${'/qfiles/'+ difficulty +'_15/page'+#numbers.formatInteger(page_number,3) + '_' + #numbers.formatInteger(r+1,3) +'.png'}}" data-grabbable-index="${r}" th:id="${r}" th:ondragend="updateWorkingIndices()"  width="${1100/difficulty}+'px" onload="setBg(this)">
+            <img class = "item" draggable = true  
+            th:src="@{${'/qfiles/'+ difficulty +'_15/page'+#numbers.formatInteger(page_number, 3) + '_' + #numbers.formatInteger(((r / difficulty) * difficulty) + (difficulty - (r % difficulty)), 3) +'.png'}}" 
+            data-grabbable-index="${r}" th:id="${r}"  width="${1100/difficulty}+'px" 
+            onload="setBg(this)" ondragend="setBg(this)">
         </div>
-        <!-- </th:block> -->
     </section>
     <button type="submit" value="Check" onsubmit="onSubmit()"> Check Order </button>
     <script th:src="@{/js/grabbable.js}"></script>
     <script >
-        function generateRandomColor(){
-            let maxVal = 0xFFFFFF; // 16777215.
-            let randomNumber = Math.random() * maxVal;
-            randomNumber = Math.floor(randomNumber);
-            randomNumber = randomNumber.toString(16);
-            let randColor = randomNumber.padStart(6, 0);
-            return `#${randColor.toUpperCase()}`
+        function array_move(arr, old_index, new_index) {
+            if (new_index >= arr.length) {
+            var k = new_index - arr.length + 1;
+            while (k--) {
+            arr.push(undefined);
+            }
         }
-
-        function setBg(el) {
-            el.style.backgroundColor= generateRandomColor();
-        }
-        function arrange(){
-            let difficultyIndex = document.getElementById("difficulty").value;
-            //alert("here");
-            //document.getElementsByClassName(".box .grabbable-parent").style.gridTemplateColumns = "50px 50px 50px";
-            document.getElementById("grids").style.gridTemplateColumns = "repeat("+difficultyIndex+",  auto)";
-            //document.getElementsByClassName(".item").style.backgrounndColor= generateRandomColor();
-            //document.getElementsByClassName(".item").style.backgrounndColor= generateRandomColor();
-            
-        }
+        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+        //return arr; // for testing
+        };
         document.querySelector(".grabbable-parent").grabbable({
         callback: function(el, newIndex, oldIndex) {
             rememberId: "grabbable-sample"
             let indicesString = document.getElementById("indices").value;
             var indices = indicesString.trim().split(" ");
-            console.log(indices + "-" + newIndex + "-" + oldIndex);
-            let toSwap = indices[oldIndex];
-            indices.splice(newIndex, 0, toSwap);
-            indices.splice(oldIndex+1, 1);
+            console.log(indices + "-\n" + newIndex + "-\n" + oldIndex);
+            array_move(indices, oldIndex, newIndex);
+            // let toSwap = indices[oldIndex];
+            // indices.splice(newIndex, 0, toSwap);
+            // indices.splice(oldIndex+1, 1);
             document.getElementById("indices").value = indices.join(" ");
-            
+            document.getElementById("last_updated").value = newIndex;
+            //alert("No "+document.getElementById("last_updated").value);
+            // alert(indices[newIndex] + " - "+ document.getElementById("last_updated").value);
+            // if (indices[newIndex] == newIndex){
+            //     alert("Yes");
+            // }
+            //if el.getElementById()
             //alert("Grabbed!\n"+ indices[newIndex] + " -> " + indices[oldIndex]);
             console.log(indices);
             //alert("Grabbed!\n"+  + newIndex + " -> " + oldIndex);
@@ -75,9 +105,12 @@
         }
         });
         
-        function updateWorkingIndices(){
+        function updateBgColor(id){
             //var val = document.getElementById("#yourId").val();
             //alert(" - " + " - " );
+            let indicesString = document.getElementById("indices").value;
+            var indices = indicesString.trim().split(" ");
+
         }
         /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
         function openNav() {
