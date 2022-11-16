@@ -17,6 +17,10 @@ public class PlayController {
      * @param model
      * @return
      */
+    @GetMapping("/login")
+    public String loginForm(Model model){
+        return "login";
+    }
     @GetMapping("/")
     public String play(Model model){
         List<Integer> randomIndices = new ArrayList<Integer>();

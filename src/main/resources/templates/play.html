@@ -58,7 +58,11 @@
           </div>
     </section>
         
-    
+    <div class = "wrapper">
+    <div id="myProgress">
+        <div id="myBar"></div>
+    </div>
+
     <section class = "box grabbable-parent" id="grids">
         <div th:each="r : ${indices}" class="holder">
             <img class = "item" draggable = true  
@@ -67,7 +71,11 @@
             onload="setBg(this)" ondragend="setBg(this)">
         </div>
     </section>
-    <button type="submit" value="Check" onsubmit="onSubmit()"> Check Order </button>
+    </div>
+    <div class = "buttons">
+        <button class = "mybutton" width = "150px'" type="submit" value="Check" onsubmit="previousPage()"> <<< Previous </button>
+        <button class = "mybutton" width = "150px'" type="submit" value="Check" onsubmit="nextPage()"> Next >>> </button>
+    </div>
     <script th:src="@{/js/grabbable.js}"></script>
     <script >
         function array_move(arr, old_index, new_index) {
@@ -83,8 +91,13 @@
         document.querySelector(".grabbable-parent").grabbable({
         callback: function(el, newIndex, oldIndex) {
             rememberId: "grabbable-sample"
+            var correctGrids = 0;
+            
+        
             let indicesString = document.getElementById("indices").value;
             var indices = indicesString.trim().split(" ");
+            var correctGrids = 0;
+            var totalGrids = indices.length;
             console.log(indices + "-\n" + newIndex + "-\n" + oldIndex);
             array_move(indices, oldIndex, newIndex);
             // let toSwap = indices[oldIndex];
@@ -92,14 +105,26 @@
             // indices.splice(oldIndex+1, 1);
             document.getElementById("indices").value = indices.join(" ");
             document.getElementById("last_updated").value = newIndex;
+            var progress = document.getElementById("myBar");
             //alert("No "+document.getElementById("last_updated").value);
             // alert(indices[newIndex] + " - "+ document.getElementById("last_updated").value);
             // if (indices[newIndex] == newIndex){
-            //     alert("Yes");
+            //alert("Yes");
             // }
             //if el.getElementById()
             //alert("Grabbed!\n"+ indices[newIndex] + " -> " + indices[oldIndex]);
-            console.log(indices);
+            for(let i = 0; i < indices.length; i++){
+            let el = document.getElementById(i);
+            if (indices[i] == i){
+                //alert("Yes");
+                el.style.backgroundColor= "#fff";
+                correctGrids++;
+            }
+            else{
+                el.style.backgroundColor= generateRandomColor();
+            }
+            progress.style.width = correctGrids/totalGrids*100 + "%";
+            }
             //alert("Grabbed!\n"+  + newIndex + " -> " + oldIndex);
             //updateWorkingIndices(newIndex, oldIndex);
         }
