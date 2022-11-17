@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.haneef.quranmaster.Entity.FirstVerses;
+import com.haneef.quranmaster.entity.FirstVerses;
 
 @Controller
 public class PlayController {
@@ -17,10 +17,7 @@ public class PlayController {
      * @param model
      * @return
      */
-    @GetMapping("/login")
-    public String loginForm(Model model){
-        return "login";
-    }
+    
     @GetMapping("/")
     public String play(Model model){
         List<Integer> randomIndices = new ArrayList<Integer>();

@@ -1,8 +1,29 @@
+.buttons {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-around;
+  width: auto;
+  display: inline;
+}
+
+.mybutton {  
+  width: 30%;
+  border: none;
+  background-color: #04AA6D;
+  padding: 10px 14px;
+  font-size: 26px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.wrapper {
+  width: auto;
+}
+
 .opening {
   direction: rtl;
   text-align: right;
 }
-
 
 p {
   margin: 0;
@@ -16,6 +37,17 @@ ul { list-style-type: ""; }
     border-bottom-width: 1px;
     
 }
+#myProgress {
+  width: 100%;
+  background-color: grey;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: green;
+}
+
 #main {
   border-radius: 10px;
     display: inline;

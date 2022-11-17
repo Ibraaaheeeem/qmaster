@@ -1,4 +1,4 @@
-package com.haneef.quranmaster.Entity;
+package com.haneef.quranmaster.entity;
 
 public class FirstVerses {
     // Names of each chapter of the Qur-aan
