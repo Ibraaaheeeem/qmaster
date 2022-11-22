@@ -34,8 +34,8 @@
 			<div class="login">
 				<form action="#" th:action="@{/signin}" th:object="${user}" method="POST">
 					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" th:field="*{email}" placeholder="Email" required pattern="(?=.*\d)(?=.*[a-z]).{8,}">
-					<input type="password" th:field="*{password}" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z]).{8,}">
+					<input type="email" th:field="*{username}" placeholder="Email">
+					<input type="password" th:field="*{password}" placeholder="Password">
 					<button type="submit" id="loginbutton">Login</button>
 				</form>
 			</div>

@@ -28,6 +28,13 @@ public class UserController {
         return "signin";
     }
 
+    // @PostMapping("signin")
+    public String signin(@ModelAttribute("user") UserRegistrationDto newUserRegistrationDto){
+        //UserRegistrationDto newUserRegistration = new UserRegistrationDto();
+		//model.addAttribute("user", newUserRegistration);
+        return "redirect:/";
+    }
+
     @PostMapping("signout")
     public String signoutForm(Model model){
         User newUser = new User();
@@ -37,7 +44,9 @@ public class UserController {
 
     @PostMapping("signup")
     public String signup(@ModelAttribute("user") UserRegistrationDto newUserRegistrationDto){
+        System.out.println("Saving 1");
         userService.save(newUserRegistrationDto);
+        System.out.println("Saving 2");
         return "redirect:/signin?success";
     }
 

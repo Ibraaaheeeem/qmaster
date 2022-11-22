@@ -1,17 +1,26 @@
 package com.haneef.quranmaster.entity;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.JoinColumn;
+
 
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name="users")
+@Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 
 public class User {
 
@@ -25,15 +34,20 @@ public class User {
 	@Column(name = "email", nullable=false, unique=true)
 	private String email;
 	
-    @Column(name = "salt", nullable=false)
-	private String salt;
-	
 	@Column(name = "password", nullable=false)
 	private String password;
 	
 	@Column(name = "activated", nullable=false)
-
     private boolean activated;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(	name = "users_roles",
+				joinColumns = @JoinColumn(
+						name = "users_id", referencedColumnName = "id"),
+				inverseJoinColumns = @JoinColumn(
+						name = "roles_id", referencedColumnName = "id")
+				)
+	private Collection<Role> roles;
 
 	@Column(name="account_non_locked")
 	private boolean accountNonLocked;
@@ -54,13 +68,6 @@ public class User {
         this.username = username;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
 
     public String getPassword() {
         return password;
@@ -86,16 +93,21 @@ public class User {
         this.accountNonLocked = accountNonLocked;
     }
 
-    public User(String username, String email, String salt, String password, boolean activated,
-            boolean accountNonLocked) {
+    public User(String username, String email, String password, boolean activated, boolean accountNonLocked, Collection<Role> roles) {
         this.username = username;
         this.email = email;
-        this.salt = salt;
         this.password = password;
         this.activated = activated;
         this.accountNonLocked = accountNonLocked;
+        this.roles = roles;
     }
+    public Collection<Role> getRoles() {
+		return roles;
+	}
 
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
     public User() {
 
     }
